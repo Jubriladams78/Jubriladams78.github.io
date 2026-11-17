@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Network Troubleshooting Lab (WGU D412) | Jubril Adams</title>
+<meta name="description" content="How I worked six simulated help desk tickets in GNS3 and passed all six: the environment, my troubleshooting method, and what I learned. Methods only, no ticket answers.">
+<link rel="canonical" href="https://jubriladams.com/network-lab.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Network Troubleshooting Lab (WGU D412) | Jubril Adams">
+<meta property="og:description" content="How I worked six simulated help desk tickets in GNS3 and passed all six: the environment, my troubleshooting method, and what I learned. Methods only, no ticket answers.">
+<meta property="og:url" content="https://jubriladams.com/network-lab.html">
+<meta name="theme-color" content="#0b5f7a">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="index.html">Jubril Adams</a>
+    <nav aria-label="Main"><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="experience.html">Experience</a></li><li><a href="projects.html" aria-current="page">Projects</a></li><li><a href="skills.html">Skills</a></li><li><a href="contact.html">Contact</a></li></ul></nav>
+  </div>
+</header>
+<main id="main"><div class="wrap">
+
+<p class="note"><a href="projects.html">Projects</a> / Network Troubleshooting Lab</p>
+<h1 style="margin-top:8px">Network Troubleshooting Lab</h1>
+<p class="lead" style="margin-top:12px">WGU D412, Network Analytics and Troubleshooting. I worked six help desk tickets in a simulated enterprise network and passed all six with a 100% score in November 2026.</p>
+<p class="note">This is a graded assessment that other students still take, so this page shares my methods and tools, not the ticket answers. The same applies to my <a href="https://github.com/Jubriladams78/network-troubleshooting-lab">GitHub repository</a>.</p>
+
+<section class="section" aria-labelledby="env">
+  <h2 id="env">The environment</h2>
+  <p>The lab ran in GNS3 and modeled a small company network.</p>
+  <div class="grid">
+    <div class="card"><h3>Routers</h3><p>Several VyOS routers connecting user, admin, server, and DMZ subnets.</p></div>
+    <div class="card"><h3>Firewall</h3><p>OPNsense, separating the LAN, the DMZ, and the internet.</p></div>
+    <div class="card"><h3>Servers</h3><p>Windows Server 2016 for DNS, Ubuntu Server, and Linux and Windows servers in a DMZ.</p></div>
+    <div class="card"><h3>Clients</h3><p>A Windows 10 laptop, a Linux desktop, and a test PC.</p></div>
+    <div class="card"><h3>Tools</h3><p>Wireshark, PuTTY, TightVNC, the OPNsense web console, and the Linux and Windows command line.</p></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="how">
+  <h2 id="how">How I worked each ticket</h2>
+  <ol>
+    <li><b>Ask the requester first.</b> What changed, when it started, what still works, and whether I may connect to their machine. Two requesters said no, so I proved where the fault lived from the network side before asking again.</li>
+    <li><b>Test the path one hop at a time.</b> Local IP and gateway, then the gateway, then the next router, then DNS. I changed nothing until a test pointed at one device.</li>
+    <li><b>Compare against a known good answer.</b> For DNS, I compared the internal server's reply with a public resolver. For routing, I compared each router's table with the network map.</li>
+    <li><b>Make the smallest fix that solves it,</b> then save the change so it survives a reboot.</li>
+    <li><b>Verify from the user's side,</b> explain the cause and the fix in plain language, and ask the requester to confirm.</li>
+  </ol>
+</section>
+
+<section class="section" aria-labelledby="kinds">
+  <h2 id="kinds">The six kinds of problem</h2>
+  <article class="project" id="t1">
+  <header><h3>Ticket 1: Identifying a suspicious server from a packet capture</h3></header>
+  <ul class="tags"><li>Wireshark</li><li>Packet capture</li></ul>
+  <p><b>The situation.</b> A security analyst reported an illegal service on the network and had only a capture file to go on.</p>
+  <p><b>My method.</b> Filter the capture down to the protocol in question, read what the server says about itself, and name the host from that evidence. Save the result where the requester asked and leave the server running until told otherwise.</p>
+</article>
+<article class="project" id="t2">
+  <header><h3>Ticket 2: Users sent to the wrong website</h3></header>
+  <ul class="tags"><li>nslookup</li><li>Windows Server DNS</li><li>Ubuntu</li></ul>
+  <p><b>The situation.</b> One website opened a different page while every other site worked, which pointed to name resolution.</p>
+  <p><b>My method.</b> Ask the internal DNS server and a public resolver the same question and compare the answers. Where they differ, inspect the internal server&#x27;s configuration, fix the cause at the source, and repeat the same lookup to prove it.</p>
+</article>
+<article class="project" id="t3">
+  <header><h3>Ticket 3: Servers that cannot reach other networks</h3></header>
+  <ul class="tags"><li>ping</li><li>tracepath</li><li>VyOS</li><li>GNS3</li></ul>
+  <p><b>The situation.</b> A server could not reach other networks or the internet, which blocked updates.</p>
+  <p><b>My method.</b> Test one hop at a time: local settings, the gateway, the next router, then DNS. Read the replies to tell a loop from a dead end, follow the traffic upstream, make the smallest router change that fixes it, and save the change so it survives a reboot.</p>
+</article>
+<article class="project" id="t4">
+  <header><h3>Ticket 4: A device that dropped off its network</h3></header>
+  <ul class="tags"><li>VyOS router</li><li>Switch configuration</li><li>Windows</li></ul>
+  <p><b>The situation.</b> A company laptop lost network access over its ethernet cable.</p>
+  <p><b>My method.</b> Confirm the router and switch are healthy before touching the client. Then compare the client&#x27;s adapter settings with the network design, and change only what does not match.</p>
+</article>
+<article class="project" id="t5">
+  <header><h3>Ticket 5: A firewall change that cut off access</h3></header>
+  <ul class="tags"><li>OPNsense</li><li>GNS3</li></ul>
+  <p><b>The situation.</b> After a change meant to open access to a server, nothing outside its network could reach it.</p>
+  <p><b>My method.</b> Review the rules on each interface in order and by direction, find the rule that does the opposite of what was intended, correct only that rule, apply the change, and test from a different network.</p>
+</article>
+<article class="project" id="t6">
+  <header><h3>Ticket 6: Finding unauthorized services</h3></header>
+  <ul class="tags"><li>netcat</li><li>Ubuntu</li></ul>
+  <p><b>The situation.</b> A security lead needed to know which open ports on a server fell outside the permitted set.</p>
+  <p><b>My method.</b> Scan the server&#x27;s ports with whatever tool is available, compare the results with the permitted list, record the difference in the requested file, and report the full results.</p>
+</article>
+</section>
+
+<section class="section" aria-labelledby="lessons">
+  <h2 id="lessons">What I learned</h2>
+  <ul>
+    <li><b>The first guess is often wrong.</b> On one ticket I suspected the server, and the real cause was two routers away.</li>
+    <li><b>A loop looks different from a dead end.</b> "Time to live exceeded" replies point to a routing loop, while silence points to a host or service that is down.</li>
+    <li><b>Respecting a user's "no" made me a better troubleshooter.</b> It forced me to collect evidence on the network side first.</li>
+    <li><b>Document as you go.</b> Clear notes made the final write up fast and accurate.</li>
+  </ul>
+  <div class="actions"><a class="btn primary" href="https://github.com/Jubriladams78/network-troubleshooting-lab">View the repository</a><a class="btn" href="projects.html">Back to projects</a></div>
+</section>
+
+</div></main>
+<footer>
+  <div class="wrap">
+    <div>Jubril Adams, Greater Chicago Area. Updated November 2026.</div>
+    <ul>
+      <li><a href="https://www.linkedin.com/in/jubriladams">LinkedIn</a></li>
+      <li><a href="https://github.com/Jubriladams78">GitHub</a></li>
+      <li><a href="assets/Jubril-Adams-Resume.pdf">Résumé (PDF)</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>

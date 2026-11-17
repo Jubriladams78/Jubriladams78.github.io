@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projects | Jubril Adams</title>
+<meta name="description" content="Network troubleshooting, Windows Server 2025, Azure governance with Terraform, Azure Bastion, and Git workflow labs, each linked to its GitHub repository.">
+<link rel="canonical" href="https://jubriladams.com/projects.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Projects | Jubril Adams">
+<meta property="og:description" content="Network troubleshooting, Windows Server 2025, Azure governance with Terraform, Azure Bastion, and Git workflow labs, each linked to its GitHub repository.">
+<meta property="og:url" content="https://jubriladams.com/projects.html">
+<meta name="theme-color" content="#0b5f7a">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="index.html">Jubril Adams</a>
+    <nav aria-label="Main"><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="experience.html">Experience</a></li><li><a href="projects.html" aria-current="page">Projects</a></li><li><a href="skills.html">Skills</a></li><li><a href="contact.html">Contact</a></li></ul></nav>
+  </div>
+</header>
+<main id="main"><div class="wrap">
+
+<h1>Projects</h1>
+<p class="lead" style="margin-top:12px">Selected labs from my <a href="https://github.com/Jubriladams78">GitHub</a>. They are self directed home labs and coursework, not production employment. None has a live demo, so each links to its repository.</p>
+<section class="section" style="margin-top:28px" aria-label="Projects">
+<article class="project" id="network">
+  <header><h3>Network Troubleshooting Lab (WGU D412)</h3><div class="when">Nov 2026</div></header>
+  <p>WGU coursework simulation in GNS3. I resolved all six simulated network and security help desk tickets with a 100% score, working with Wireshark, VyOS routers, an OPNsense firewall, Windows Server DNS, and Ubuntu and Windows clients.</p><p>The problems included a routing loop between two routers, a rogue DNS zone that redirected users to a fake site, a firewall rule that blocked access to a DMZ server, a laptop with the wrong IP configuration, an illegal FTP server found in a packet capture, and unauthorized open ports found with a full TCP scan. I asked each requester targeted questions and confirmed every fix with them before closing the ticket.</p><p class="note">The repository documents my methods and tools only. Specific ticket answers are left out on purpose, because the simulation is a graded assessment that other students still take. <a href="network-lab.html">Read the full walkthrough of my methods</a>. The repository also has a command reference (commands.md).</p>
+  <ul class="tags"><li>GNS3</li><li>Wireshark</li><li>VyOS</li><li>OPNsense</li><li>Windows Server DNS</li><li>Ubuntu</li><li>Network troubleshooting</li></ul>
+  <p><a href="https://github.com/Jubriladams78/network-troubleshooting-lab">View repository on GitHub</a></p>
+</article>
+<article class="project" id="windows">
+  <header><h3>Windows Server 2025 Home Lab</h3><div class="when">Sep 2026</div></header>
+  <p>A self directed lab that simulates an enterprise workflow on Hyper-V with a Windows Server 2025 domain controller and a Windows 11 Enterprise client. I deployed an SMB departmental share, gave an Active Directory security group access through NTFS permissions, and used Group Policy Preferences to map the share for users automatically.</p><p>I checked domain user access and the drive mapping with PowerShell, and fixed a client that had dropped out of the domain and a duplicate drive map entry in the policy.</p><p class="note"><b>Evidence:</b> the repository documents the build and the troubleshooting along the way.</p>
+  <ul class="tags"><li>Hyper-V</li><li>Windows Server 2025</li><li>Active Directory</li><li>DNS</li><li>Group Policy</li><li>NTFS</li><li>PowerShell</li></ul>
+  <p><a href="https://github.com/Jubriladams78/windows-server-2025-ad-dns-gpo-lab">View repository on GitHub</a></p>
+</article>
+<article class="project" id="azure">
+  <header><h3>Azure Resource Hierarchy and Terraform Governance Lab</h3><div class="when">Aug 2026</div></header>
+  <p>A self directed lab that builds an enterprise style Azure governance foundation with Terraform and PowerShell. It includes a resource hierarchy with core, network, and compute resource groups, allowed-location and required-tag policies, reusable bootstrap, validation, and destroy scripts, and GitHub Actions validation.</p><p>I verified the environment with Terraform init, validate, plan, and apply workflows.</p><p class="note"><b>Evidence:</b> design reasoning and screenshot evidence in the repository.</p>
+  <ul class="tags"><li>Azure</li><li>Terraform</li><li>Azure Policy</li><li>RBAC</li><li>PowerShell</li><li>GitHub Actions</li></ul>
+  <p><a href="https://github.com/Jubriladams78/Azure-resource-hierarchy-lab">View repository on GitHub</a></p>
+</article>
+<article class="project" id="bastion">
+  <header><h3>Secure Azure Ubuntu Web Server with Azure Bastion</h3><div class="when">Jul 2026</div></header>
+  <p>A lab from the Scarstack Solutions IT Bootcamp. I deployed an Ubuntu VM running Nginx in Azure with administration routed through Azure Bastion, a subnet level network security group, a public DNS name, and governance tags for cost tracking and ownership.</p><p>In my review after the lab I found the network security group still allowed SSH from the internet, and I documented the fix: limit port 22 to the Bastion subnet or remove the rule.</p><p class="note"><b>Evidence:</b> a post lab review in the repository that records the security finding and its fix.</p>
+  <ul class="tags"><li>Azure</li><li>Azure Bastion</li><li>NSG</li><li>Ubuntu</li><li>Nginx</li></ul>
+  <p><a href="https://github.com/Jubriladams78/scarstack-azure-bastion-lab">View repository on GitHub</a></p>
+</article>
+<article class="project" id="git">
+  <header><h3>Version Control and Git Workflow Lab</h3><div class="when">WGU coursework</div></header>
+  <p>I ran a Git branching workflow with GitLab and Git Bash. I created Working and Test branches, fixed broken tags and spelling errors across three HTML files in separate commits, produced and resolved a merge conflict without losing changes, tagged the first release V.1.0.0, and pushed a retrospective with the git log and screenshots.</p><p class="note"><b>Evidence:</b> a retrospective with the git log and screenshots in the repository.</p>
+  <ul class="tags"><li>Git</li><li>GitLab</li><li>Git Bash</li><li>Semantic versioning</li></ul>
+  <p><a href="https://github.com/Jubriladams78/git-version-control-lab">View repository on GitHub</a></p>
+</article>
+</section>
+<!-- TODO (Jubril): your GitHub README lists an "Enterprise Service Desk Simulation" but no public repo with that name exists. Add it here once you have the link. -->
+
+</div></main>
+<footer>
+  <div class="wrap">
+    <div>Jubril Adams, Greater Chicago Area. Updated November 2026.</div>
+    <ul>
+      <li><a href="https://www.linkedin.com/in/jubriladams">LinkedIn</a></li>
+      <li><a href="https://github.com/Jubriladams78">GitHub</a></li>
+      <li><a href="assets/Jubril-Adams-Resume.pdf">Résumé (PDF)</a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>
